@@ -3,6 +3,8 @@ package screens;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.*;
+
 
 import java.util.List;
 
@@ -47,6 +49,10 @@ public class ContactListScreen extends BaseScreen{
         waitElement(addContactBtn, 5);
         addContactBtn.click();
         return new AddNewContactScreen(driver);
+    }
+
+    public boolean isNewContactPresent(String contactName) {
+        return rowName.equals(contactName);
     }
 
 }

@@ -1,5 +1,6 @@
 import config.AppiumConfig;
 import models.Contact;
+import org.slf4j.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
@@ -34,10 +35,17 @@ public class AddNewContactTests extends AppiumConfig {
                 .description("NewPositive")
                 .build();
 
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Creating a new contact: {}", contact.getName());
+
         new ContactListScreen(driver)
                 .openContactForm()
                 .fillContactForm(contact)
-                .submitContact();
+                .submitContact()
+                .isNewContactPresent(contact.getName());
+
+        logger.info("New contact '{}' was successfully added.", contact.getName());
+
 
     }
 

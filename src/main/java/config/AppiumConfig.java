@@ -1,16 +1,24 @@
 package config;
 
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class AppiumConfig {
+
+    Logger logger = LoggerFactory.getLogger(AppiumConfig.class);
 
     public static AppiumDriver<MobileElement> driver;
 
@@ -44,4 +52,14 @@ public class AppiumConfig {
     public void tearDown(){
        // driver.quit();
     }
+
+    @BeforeMethod
+    public void startLogger(Method method){
+        logger.info("Method " + method.getName() + " is started");
+    }
+    @AfterMethod
+    public void end(){
+        logger.info("==================================");
+    }
+
 }
