@@ -28,6 +28,10 @@ public class AuthenticationScreen extends BaseScreen{
     MobileElement regBtn;
     @FindBy(id = "com.sheygam.contactapp:id/loginBtn")
     MobileElement loginBtn;
+    @FindBy(id = "android:id/message")
+    MobileElement errorTextView;
+    @FindBy(id = "android:id/button1")
+    MobileElement okBtn;
 
     public AuthenticationScreen fillEmail(String email){
         waitElement(emailInput, 5);
@@ -54,30 +58,16 @@ public class AuthenticationScreen extends BaseScreen{
         pause(3000);
         return this;
     }
+
+//    public boolean isErrorMessageHasText(String text){
+////       return errorTextView.getText().contains(text);
+//    return  isErrorMessageContainsText(text);
+//    }
     public AuthenticationScreen isErrorMessageHasText(String text) {
         Assert.assertTrue(isErrorMessageContainsText(text));
         return this;
     }
 
-//    public boolean isAlertPresent(String text) {
-//
-//        Alert alert = new WebDriverWait(driver, 5)
-//                .until(ExpectedConditions.alertIsPresent());
-//        if (alert == null) return false;
-//        driver.switchTo().alert();
-//        System.out.println(alert.getText());
-//        alert.accept();
-//        return true;
-//    }
-//    public AuthenticationScreen submitRegistrationNegative2() {
-//        regBtn.click();
-//        Alert alert = new WebDriverWait(driver, 5)
-//                .until(ExpectedConditions.alertIsPresent());
-//        if (alert == null) return this;
-//        driver.switchTo().alert();
-//        System.out.println(alert.getText());
-//        alert.accept();
-//        return this;
-//    }
+
 
 }

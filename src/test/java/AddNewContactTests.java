@@ -1,6 +1,7 @@
 import config.AppiumConfig;
 import models.Contact;
 import org.slf4j.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
@@ -18,7 +19,7 @@ public class AddNewContactTests extends AppiumConfig {
     public void precondition(){
         new SplashScreen(driver)
                 .gotoAuthenticationScreen()
-                .fillEmail("mb@gmail.com")
+                .fillEmail("mb_1654@gmail.com")
                 .fillPassword("Mb12345$")
                 .submitLogin();
     }
@@ -38,14 +39,13 @@ public class AddNewContactTests extends AppiumConfig {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         logger.info("Creating a new contact: {}", contact.getName());
 
+        Assert.assertTrue(
         new ContactListScreen(driver)
                 .openContactForm()
                 .fillContactForm(contact)
                 .submitContact()
-                .isNewContactPresent(contact.getName());
-
-        logger.info("New contact '{}' was successfully added.", contact.getName());
-
+                .isContactAdded(contact)
+        );
 
     }
 
