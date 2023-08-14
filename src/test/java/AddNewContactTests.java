@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class AddNewContactTests extends AppiumConfig {
 
-//    int i = new Random().nextInt(1000) + 1000;
-    int i = (int) (System.currentTimeMillis() / 1000) % 3600;
+    //int i = new Random().nextInt(1000) + 1000;
+    //int i = (int) (System.currentTimeMillis() / 1000) % 3600;
 
     @BeforeMethod
     public void precondition(){
@@ -27,6 +27,7 @@ public class AddNewContactTests extends AppiumConfig {
 
     @Test
     public void addNewContactPositive() {
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
 
         Contact contact = Contact.builder()
                 .name("John" + i)
@@ -51,6 +52,7 @@ public class AddNewContactTests extends AppiumConfig {
 
     @Test() //invocationCount = 20
     public void addNewContactPositiveScroll(){
+        int i = (int) (System.currentTimeMillis() / 1000) % 3600;
 
         Contact contact = Contact.builder()
                 .name("Din" + i)
