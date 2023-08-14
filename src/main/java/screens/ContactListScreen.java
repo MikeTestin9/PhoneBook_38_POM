@@ -174,5 +174,44 @@ public class ContactListScreen extends BaseScreen {
         return contact.toString().contains(text);
     }
 
+    public ContactListScreen scrollList(){
+        waitElement(addContactBtn, 5);
+        MobileElement contact = contacts.get(contacts.size() - 1);
+        Rectangle rect = contact.getRect();
+
+        int xRow = rect.getX() + rect.getWidth() / 2;
+        int yRow = rect.getY() + rect.getHeight() / 2;
+
+        TouchAction<?> touchAction = new TouchAction<>(driver);
+        touchAction.longPress(PointOption.point(xRow, yRow))
+                .moveTo(PointOption.point(xRow, 0))
+                .release()
+                .perform();
+        return this;
+    }
+
+    public ContactListScreen isContactAddedScroll(Contact contact){
+        boolean res = false; //contact not added
+        while (!res) {  //while contact is added
+            boolean checkName = checkContainsText(names, contact.getName() + " " + contact.getLastName());
+                    //checks if names contains name and put it in checkName
+            boolean checkPhone = checkContainsText(phones, contact.getPhone()); // same with phone
+            res = checkName && checkPhone; //res = true if check matches
+            if(res == false) isEndOfList(); //if res is false then starts method that scrolls ! =)
+        }
+        Assert.assertTrue(res);
+        return this;
+    }
+    public boolean isEndOfList(){
+        String beforeScroll = names.get(names.size() - 1).getText() + " " + phones.get(phones.size() - 1).getText();
+                //we get text of last name and phone and put them into a string beforeScroll
+        scrollList(); // scrooooooll
+        String afterScroll = names.get(names.size() - 1).getText() + " " + phones.get(phones.size() - 1).getText();
+                //we get again text of last name and phone and put it into a string afterScroll
+        if(beforeScroll.equals(afterScroll)) return true; //if before and after same. means there is nothing to scroll = endOfList
+        return false; //if before and after not the same, means that there is no end of list and we return so we will start scrolling
+                    //so we check if the contact in the end of the list
+    }
+
 
 }

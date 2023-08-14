@@ -2,6 +2,7 @@ import config.AppiumConfig;
 import models.Contact;
 import org.slf4j.*;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
@@ -19,13 +20,13 @@ public class AddNewContactTests extends AppiumConfig {
     public void precondition(){
         new SplashScreen(driver)
                 .gotoAuthenticationScreen()
-                .fillEmail("mb_1654@gmail.com")
+                .fillEmail("mb@gmail.com")
                 .fillPassword("Mb12345$")
                 .submitLogin();
     }
 
     @Test
-    public void addNewContactPositive(){
+    public void addNewContactPositive() {
 
         Contact contact = Contact.builder()
                 .name("John" + i)
@@ -40,13 +41,40 @@ public class AddNewContactTests extends AppiumConfig {
         logger.info("Creating a new contact: {}", contact.getName());
 
         Assert.assertTrue(
-        new ContactListScreen(driver)
-                .openContactForm()
-                .fillContactForm(contact)
-                .submitContact()
-                .isContactAdded(contact)
+                new ContactListScreen(driver)
+                        .openContactForm()
+                        .fillContactForm(contact)
+                        .submitContact()
+                        .isContactAdded(contact)
         );
-
     }
 
+    @Test() //invocationCount = 20
+    public void addNewContactPositiveScroll(){
+
+        Contact contact = Contact.builder()
+                .name("Din" + i)
+                .lastName("Djarin")
+                .email("mandalorian" + i + "@gmail.com")
+                .phone("1234567" + i)
+                .address("Mandalor")
+                .description("This is the way")
+                .build();
+
+            new ContactListScreen(driver)
+                    .openContactForm()
+                    .fillContactForm(contact)
+                    .submitContact()
+                    .isContactAddedScroll(contact);
+    }
+
+//    @AfterMethod
+//    public void postcondition(){
+//        if(new ContactListScreen(driver).isContactListActivityPresent()){
+//            new ContactListScreen(driver).logout();
+//            new SplashScreen(driver);
+//        }
+//    }
+
 }
+
